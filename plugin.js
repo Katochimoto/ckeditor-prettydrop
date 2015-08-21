@@ -34,18 +34,24 @@
                 if (dropBookmarkStart) {
                     var range = this.getSelection().getRanges()[ 0 ];
                     // если не создать закладку из текущего range после вставки
-                    // выделение будет не точным
+                    // выделение будет не правильным
                     var dropBookmarkEnd = range.createBookmark();
+                    var startNode = dropBookmarkStart.startNode;
+                    var endNode = dropBookmarkEnd.startNode;
 
                     var bmRange = this.createRange();
-                    bmRange.setStartBefore(dropBookmarkStart.startNode);
-                    bmRange.setEndBefore(dropBookmarkEnd.startNode);
+                    bmRange.setStartBefore(startNode);
+                    bmRange.setEndBefore(endNode);
                     bmRange.select();
 
-                    dropBookmarkStart.startNode.remove();
-                    dropBookmarkEnd.startNode.remove();
-
                     dropBookmarkStart = null;
+
+                    // в FireFox удаляет ноды слишком быстро
+                    // и bmRange.select() выледяет не правильно
+                    setTimeout(function() {
+                        startNode.remove();
+                        endNode.remove();
+                    }, 0);
                 }
 
             }, editor, null, -1);

@@ -13,7 +13,7 @@
             editor.on('paste', function(event) {
                 var data = event.data;
 
-				if (data.method === 'drop' && data.dataValue) {
+                if (data.method === 'drop' && data.dataValue) {
                     // закладка должна быть создана для range, в который будет выполнена вставка
                     // иначе закладка создается не в том месте
                     // поэтому если range нет, создаем его и передаем дальше в data
@@ -26,7 +26,7 @@
                     if (data.range.collapsed) {
                         dropBookmarkStart = data.range.createBookmark();
                     }
-				}
+                }
 
             }, editor, null, 999);
 
